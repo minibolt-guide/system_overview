@@ -8,8 +8,8 @@ set -u
 # ------------------------------------------------------------------------------
 
 # set datadir
-bitcoin_dir="/data/bitcoin"  
-bitcoin_onion_address=$(bitcoin-cli getnetworkinfo | grep address.*onion)   
+bitcoin_dir="/data/bitcoin"
+bitcoin_onion_address=$(bitcoin-cli getnetworkinfo | grep address.*onion)
 
 
 # determine second drive info
@@ -46,16 +46,16 @@ color_white='\033[37;3m'
 
 
 
-# git repo urls latest version 
-bitcoin_git_repo_url="https://api.github.com/repos/bitcoin/bitcoin/releases/latest" 
-electrs_git_repo_url="https://api.github.com/repos/romanz/electrs/releases/latest" 
+# git repo urls latest version
+bitcoin_git_repo_url="https://api.github.com/repos/bitcoin/bitcoin/releases/latest"
+electrs_git_repo_url="https://api.github.com/repos/romanz/electrs/releases/latest"
 mempool_git_repo_url="https://api.github.com/repos/mempool/mempool/releases/latest"
-btcrpcexplorer_git_repo_url="https://api.github.com/repos/janoside/btc-rpc-explorer/releases/latest" 
-rtl_git_repo_url="https://api.github.com/repos/Ride-The-Lightning/RTL/releases/latest" 
-fulcrum_git_repo_url="https://api.github.com/repos/cculianu/Fulcrum/releases/latest" 
-thunderhub_git_repo_url="https://api.github.com/repos/apotdevin/thunderhub/releases/latest" 
-lnd_git_repo_url="https://api.github.com/repos/lightningnetwork/lnd/releases/latest" 
-cln_git_repo_url="https://api.github.com/repos/ElementsProject/lightning/releases/latest" 
+btcrpcexplorer_git_repo_url="https://api.github.com/repos/janoside/btc-rpc-explorer/releases/latest"
+rtl_git_repo_url="https://api.github.com/repos/Ride-The-Lightning/RTL/releases/latest"
+fulcrum_git_repo_url="https://api.github.com/repos/cculianu/Fulcrum/releases/latest"
+thunderhub_git_repo_url="https://api.github.com/repos/apotdevin/thunderhub/releases/latest"
+lnd_git_repo_url="https://api.github.com/repos/lightningnetwork/lnd/releases/latest"
+cln_git_repo_url="https://api.github.com/repos/ElementsProject/lightning/releases/latest"
 
 
 # controlled abort on Ctrl-C
@@ -71,7 +71,7 @@ trap trap_ctrlC SIGINT SIGTERM
 # print usage information for script
 usage() {
   echo "MiniBolt Welcome: system status overview
-usage: $(basename "$0") 
+usage: $(basename "$0")
 --help             display this help and exit
 --last-update, -l  show when files with saved values were last updated
 --mock, -m         run the script mocking the Lightning data
@@ -114,8 +114,8 @@ function print_last_modified() {
 }
 
 updatesstatusfile="${HOME}/.minibolt.updates.json"
-gitstatusfile="${HOME}/.minibolt.versions.json" 
-lnd_infofile="${HOME}/.minibolt.lndata.json"  
+gitstatusfile="${HOME}/.minibolt.versions.json"
+lnd_infofile="${HOME}/.minibolt.lndata.json"
 
 function last_updated() {
   print_last_modified $updatesstatusfile
@@ -143,14 +143,14 @@ fi
 # Print first welcome message
 # ------------------------------------------------------------------------------
 printf "
-${color_blue}MiniBolt %s:${color_grey}  \033[1m"₿"\033[22mitcoin full node
+${color_blue}MiniBolt %s:${color_grey}  \033[1m"B"\033[22mitcoin full node
 ${color_blue}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 " "v2"
 
 
 # Get system updates
 # ------------------------------------------------------------------------------
- 
+
 
 save_updates() {
   # write to json file
@@ -201,7 +201,7 @@ fi
 
 
 
-# Gather system data 
+# Gather system data
 # ------------------------------------------------------------------------------
 printf "%0.s#" {1..40}
 echo -ne '\r### Loading System data \r'
@@ -271,7 +271,7 @@ network_tx=$(ip -j -s link show | jq '.[] | [(select(.ifname!="lo") | .stats64.t
 
 # Gather application versions
 # ------------------------------------------------------------------------------
- 
+
 
 save_minibolt_versions() {
   # write to json file
@@ -298,7 +298,7 @@ load_minibolt_versions() {
   clngit=$(cat ${gitstatusfile} | jq -r '.githubversions.cln')
   electrsgit=$(cat ${gitstatusfile} | jq -r '.githubversions.electrs')
   btcrpcexplorergit=$(cat ${gitstatusfile} | jq -r '.githubversions.blockexplorer')
-  mempoolgit=$(cat ${gitstatusfile} | jq -r '.githubversions.mempool')  
+  mempoolgit=$(cat ${gitstatusfile} | jq -r '.githubversions.mempool')
   rtlgit=$(cat ${gitstatusfile} | jq -r '.githubversions.rtl')
   fulcrumgit=$(cat ${gitstatusfile} | jq -r '.githubversions.fulcrum')
   thunderhubgit=$(cat ${gitstatusfile} | jq -r '.githubversions.thunderhub')
@@ -517,7 +517,7 @@ fi
 printf "%0.s#" {1..60}
 
 load_lightning_data() {
-  
+
   ln_file_content=$(cat $lnd_infofile)
   ln_color="$(echo $ln_file_content | jq -r '.ln_color')"
   ln_version_color="$(echo $ln_file_content | jq -r '.ln_version_color')"
@@ -582,7 +582,7 @@ if [ "${mockmode}" -eq 1 ]; then
   ln_footer=$(printf "For others to connect to this lightning node: ${alias_color}${ln_alias}${color_grey}\n${ln_connect_guidance}")
   # data lines
   lserver_dataline_1=$(printf "${color_grey}Sync%10s" "ready")
-  lserver_dataline_2=$(printf "${color_orange}"₿"${color_grey}%18s sat" "${ln_walletbalance}")
+  lserver_dataline_2=$(printf "${color_orange}"B"${color_grey}%18s sat" "${ln_walletbalance}")
   lserver_dataline_3=$(printf "${color_grey}%3s %16s sat" "⚡" "${ln_channelbalance}")
   lserver_dataline_4=$(printf "${color_grey}%3s %16s sat" "∑" "${ln_sum_balance}")
   lserver_dataline_5=$(printf "${color_grey}%s/%s channels" "${ln_channels_online}" "${ln_channels_total}")
@@ -604,7 +604,7 @@ elif [ "$lnd_status" = "active" ]; then
     ln_footer=$(printf "For others to connect to this lightning node: ${alias_color}${ln_alias}${color_grey}\n${ln_connect_guidance}")
     # data lines
     lserver_dataline_1=$(printf "${color_grey}Sync${ln_sync_note1_color}%10s${ln_sync_note2_color}%9s" "${ln_sync_note1}" "${ln_sync_note2}")
-    lserver_dataline_2=$(printf "${color_orange}"₿"${color_grey}%18s sat" "${ln_walletbalance}")
+    lserver_dataline_2=$(printf "${color_orange}"B"${color_grey}%18s sat" "${ln_walletbalance}")
     lserver_dataline_3=$(printf "${color_grey}%3s %16s sat" "⚡" "${ln_channelbalance}")
     lserver_dataline_4=$(printf "${color_grey}%3s %16s sat" "⏳" "${ln_pendinglocal}")
     lserver_dataline_5=$(printf "${color_grey}%3s %17s sat" "∑" "${ln_sum_balance}")
@@ -628,7 +628,7 @@ elif [ "$cln_status" = "active" ];  then
     ln_footer=$(printf "For others to connect to this lightning node: ${alias_color}${ln_alias}${color_grey}\n${ln_connect_guidance}")
     # data lines
     lserver_dataline_1=$(printf "${color_grey}Sync${ln_sync_note1_color}%10s${ln_sync_note2_color}%9s" "${ln_sync_note1}" "${ln_sync_note2}")
-    lserver_dataline_2=$(printf "${color_orange}"₿"${color_grey}%18s sat" "${ln_walletbalance}")
+    lserver_dataline_2=$(printf "${color_orange}"B"${color_grey}%18s sat" "${ln_walletbalance}")
     lserver_dataline_3=$(printf "${color_grey}%3s %16s sat" "⚡" "${ln_channelbalance}")
     lserver_dataline_4=$(printf "${color_grey}%3s %17s sat" "∑" "${ln_sum_balance}")
     lserver_dataline_5=$(printf "${color_grey}%s/%s channels" "${ln_channels_online}" "${ln_channels_total}")
@@ -797,7 +797,7 @@ elif [ "$thunderhub_status" = "active" ]; then
   lwserver_running="down"
   if [ "$thunderhub_status" = "active" ]; then
     lwserver_running="up"
-    lwserver_color="${color_green}"    
+    lwserver_color="${color_green}"
     thunderhubpi=v$( sudo  head -n 3 /home/thunderhub/thunderhub/package.json | grep version | awk -F'"' '{print $4}')
     if [ "$thunderhubpi" = "$thunderhubgit" ]; then
       lwserver_version="$thunderhubpi"
@@ -821,7 +821,7 @@ printf "${color_grey}cpu temp: ${color_temp}%-4s${color_grey}  tx: %-10s storage
 ${color_grey}up: %-10s  rx: %-10s 2nd drive: ${color_storage2nd}%-11s${color_grey}   available mem: ${color_ram}%sM${color_grey} ${color_grey}
 updates: ${color_updates}%-21s${color_grey}
 ${color_blue}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${color_grey}
-${color_blue}          ┐╓┬╓┬══╝╨╨╨╝═╗╖╓┬       ${color_orange}"₿"${color_blue}%-19s${bitcoind_color}%-4s${color_grey}   ${color_blue}%-20s${lserver_color}%-4s${color_grey}
+${color_blue}          ┐╓┬╓┬══╝╨╨╨╝═╗╖╓┬       ${color_orange}"B"${color_blue}%-19s${bitcoind_color}%-4s${color_grey}   ${color_blue}%-20s${lserver_color}%-4s${color_grey}
 ${color_blue}        ─╜               ╙╠┐      ${btcversion_color}%-26s ${lserver_version_color}%-24s${color_grey}
 ${color_white}          ╙╢╢╢╢╢╢╢╢╢╢  ${color_blue}     ╢╕    ${color_grey}Sync    ${sync_color}%-18s ${lserver_dataline_1}${color_grey}
 ${color_blue}  ╒    ${color_white}     ╙╙╙╙╙╙╢╢╢${color_blue}       ├╠    ${color_grey}Mempool %-18s ${lserver_dataline_2}${color_grey}
